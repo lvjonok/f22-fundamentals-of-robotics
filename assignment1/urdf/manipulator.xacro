@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="manipulator">
+    <xacro:macro name="gen_joint" params="name xyz rpy axis child parent lower upper type">
+        <joint name="${name}" type="${type}">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="${parent}" />
+            <child link="${child}" />
+            <axis xyz="${axis}" />
+            <limit lower="${lower}" upper="${upper}" effort="1.0" velocity="1.0" />
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="prism_joint" params="name xyz rpy axis child parent lower upper">
+        <xacro:gen_joint
+            name="${name}"
+            xyz="${xyz}"
+            rpy="${rpy}"
+            axis="${axis}"
+            child="${child}"
+            parent="${parent}"
+            lower="${lower}"
+            upper="${upper}"
+            type="prismatic" />
+    </xacro:macro>
+
+    <xacro:macro name="rev_joint" params="name xyz rpy axis child parent lower upper">
+        <xacro:gen_joint
+            name="${name}"
+            xyz="${xyz}"
+            rpy="${rpy}"
+            axis="${axis}"
+            child="${child}"
+            parent="${parent}"
+            lower="${lower}"
+            upper="${upper}"
+            type="revolute" />
+    </xacro:macro>
+
+    <xacro:macro name="link" params="name xyz rpy color *geometry">
+        <link name="${name}">
+            <visual>
+                <origin xyz="${xyz}" rpy="${rpy}" />
+                <geometry>
+                    <xacro:insert_block name="geometry" />
+                </geometry>
+                <material name="material_${name}">
+                    <color rgba="${color} 1.0" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="${xyz}" rpy="${rpy}" />
+                <geometry>
+                    <xacro:insert_block name="geometry" />
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="box_link" params="name xyz rpy color">
+        <xacro:link name="${name}" xyz="${xyz}" rpy="${rpy}" color="${color}">
+            <box size="0.1 0.1 0.1" />
+        </xacro:link>
+    </xacro:macro>
+
+    <xacro:macro name="cyl_link" params="name xyz rpy color">
+        <xacro:link name="${name}" xyz="${xyz}" rpy="${rpy}" color="${color}">
+            <cylinder length="0.1" radius="0.05" />
+        </xacro:link>
+    </xacro:macro>
+
+    <xacro:macro name="sphere_link" params="name xyz rpy color">
+        <xacro:link name="${name}" xyz="${xyz}" rpy="${rpy}" color="${color}">
+            <sphere radius="0.05" />
+        </xacro:link>
+    </xacro:macro>
+
+    <xacro:box_link
+        name="base"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        color="1.0 0.0 0.0" />
+
+    <xacro:box_link
+        name="link1"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        color="0.0 1.0 0.0" />
+
+    <xacro:prism_joint
+        name="joint1"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        axis="1.0 0.0 0.0"
+        child="link1"
+        parent="base"
+        lower="-1.0"
+        upper="1.0" />
+
+    <xacro:box_link
+        name="link2"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        color="0.0 0.0 1.0" />
+
+    <xacro:prism_joint
+        name="joint2"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        axis="0.0 1.0 0.0"
+        child="link2"
+        parent="link1"
+        lower="-1.0"
+        upper="1.0" />
+
+    <xacro:cyl_link
+        name="link3"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        color="1.0 1.0 0.0" />
+
+    <xacro:rev_joint
+        name="joint3"
+        xyz="0.0 0.0 0.5"
+        rpy="0.0 0.0 0.0"
+        axis="0.0 0.0 1.0"
+        child="link3"
+        parent="link2"
+        lower="-${pi - 0.05}"
+        upper="${pi - 0.05}" />
+
+    <xacro:cyl_link
+        name="link4"
+        xyz="0.0 0.0 0.0"
+        rpy="1.57 0.0 0.0"
+        color="0.0 1.0 1.0" />
+
+    <xacro:rev_joint
+        name="joint4"
+        xyz="0.0 0.0 0.5"
+        rpy="0.0 -1.57 0.0"
+        axis="0.0 1.0 0.0"
+        child="link4"
+        parent="link3"
+        lower="-${pi - 0.05}"
+        upper="${pi - 0.05}" />
+
+    <xacro:cyl_link
+        name="link5"
+        xyz="0.0 0.0 0.0"
+        rpy="0.0 1.57 0.0"
+        color="1.0 0.0 1.0" />
+
+    <xacro:rev_joint
+        name="joint5"
+        xyz="0.5 0.0 0.0"
+        rpy="0.0 0.0 0.0"
+        axis="1.0 0.0 0.0"
+        child="link5"
+        parent="link4"
+        lower="-${pi - 0.05}"
+        upper="${pi - 0.05}" />
+
+
+</robot>
