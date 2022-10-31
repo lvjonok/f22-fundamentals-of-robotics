@@ -86,6 +86,7 @@
         rpy="0.0 0.0 0.0"
         color="0.0 1.0 0.0" />
 
+    <!-- Translation along X-axis -->
     <xacro:prism_joint
         name="joint1"
         xyz="0.0 0.0 0.0"
@@ -102,6 +103,7 @@
         rpy="0.0 0.0 0.0"
         color="0.0 0.0 1.0" />
 
+    <!-- Translation along Y-axis -->
     <xacro:prism_joint
         name="joint2"
         xyz="0.0 0.0 0.0"
@@ -118,6 +120,7 @@
         rpy="0.0 0.0 0.0"
         color="1.0 1.0 0.0" />
 
+    <!-- Revolute around Z-axis -->
     <xacro:rev_joint
         name="joint3"
         xyz="0.0 0.0 0.5"
@@ -134,6 +137,7 @@
         rpy="1.57 0.0 0.0"
         color="0.0 1.0 1.0" />
 
+    <!-- Revolute around Y-axis -->
     <xacro:rev_joint
         name="joint4"
         xyz="0.0 0.0 0.5"
@@ -150,6 +154,7 @@
         rpy="0.0 1.57 0.0"
         color="1.0 0.0 1.0" />
 
+    <!-- Revolute around X-axis -->
     <xacro:rev_joint
         name="joint5"
         xyz="0.5 0.0 0.0"

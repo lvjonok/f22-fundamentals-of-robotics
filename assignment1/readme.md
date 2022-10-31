@@ -4,9 +4,9 @@
 
 I decided to implement first two prismatic joints as movements along `XY` axis.
 
-Revolute joints are in configuration `ZYZ`.
+Revolute joints are in configuration `ZYX`.
 
-Overall configuration is `XYZYZ`.
+Overall configuration is `XYZYX`.
 
 Robot image from rviz
 ![Robot image](assets/robot.png)
